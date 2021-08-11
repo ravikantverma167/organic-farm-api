@@ -11,6 +11,11 @@ from ProductApp.serializers import CategorySerializer,ProductSerializer
 @csrf_exempt
 def categoryApi(request,id=0):
     if request.method=='GET':
+        if id != 0:
+          category=Categories.objects.get(id=id)
+          category_serializer = CategorySerializer(category)
+          return JsonResponse(category_serializer.data, safe=False)
+          
         categories = Categories.objects.all()
         categories_serializer = CategorySerializer(categories, many=True)
         return JsonResponse(categories_serializer.data, safe=False)
@@ -40,6 +45,11 @@ def categoryApi(request,id=0):
 @csrf_exempt
 def productApi(request,id=0):
     if request.method=='GET':
+        if id != 0:
+          product=Products.objects.get(id=id)
+          product_serializer = ProductSerializer(product)
+          return JsonResponse(product_serializer.data, safe=False)
+
         products = Products.objects.all()
         products_serializer = ProductSerializer(products, many=True)
         return JsonResponse(products_serializer.data, safe=False)
